@@ -1,0 +1,123 @@
+{% extends "api/base.html" %}
+{% load static %}
+
+{% block subtitle %}
+    {{ parameter.created }}
+{% endblock %}
+
+{% block content %}
+
+<div class="tile is-ancestor">
+    <div class="tile is-parent is-3">
+        <button class="tile is-child notification" id="voltageButton">
+            <p class="title">RMS Voltage</p>
+        </button>
+    </div>
+    <div class="tile is-parent is-3">
+      <article class="tile is-child notification is-invisible" id="voltageInfo">
+        <ul class="list-group">
+            <li class="list-group-item">
+                    V<sub>r</sub> = {{ parameter.voltage_r }}
+            </li>
+            <li class="list-group-item">
+                    V<sub>y</sub> = {{ parameter.voltage_y }}
+            </li>
+            <li class="list-group-item">
+                    V<sub>b</sub> = {{ parameter.voltage_b}}
+            </li>
+        </ul>
+      </article>
+    </div>
+</div>
+
+<div class="tile is-ancestor">
+    <div class="tile is-parent is-3">
+      <button class="tile is-child notification" id="currentButton">
+        <p class="title">RMS Current</p>
+      </button>
+    </div>
+
+    <div class="tile is-parent is-3">
+        <article class="tile is-child notification is-invisible" id="currentInfo">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    I<sub>r</sub> = {{ parameter.current_r }}
+            </li>
+            <li class="list-group-item">
+                I<sub>y</sub> = {{ parameter.current_y }}
+            </li>
+            <li class="list-group-item">
+                    I<sub>b</sub> = {{ parameter.current_b}}
+            </li>
+        </ul>
+      </article>
+    </div>
+    
+</div>
+
+<div class="tile is-ancestor">
+    <div class="tile is-parent is-3">
+        <button class="tile is-child notification" id="powerButton">
+            <p class="title">Active Power</p>
+        </button>
+    </div>
+    <div class="tile is-parent is-3">
+        <article class="tile is-child notification is-invisible" id="powerInfo">
+            <ul class="list-group">
+                <li class="list-group-item">
+                        P<sub>r</sub> = {{ parameter.power_r }}
+                    </li>
+                <li class="list-group-item">
+                        P<sub>y</sub> = {{ parameter.power_y }}
+                    </li>
+                    <li class="list-group-item">
+                        P<sub>b</sub> = {{ parameter.power_b}}
+                </li>
+            </ul>
+        </article>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block extrascript %}
+<script>
+    var voltageButton = document.getElementById("voltageButton");
+    var currentButton = document.getElementById("currentButton");
+    var powerButton = document.getElementById("powerButton");
+
+    var voltageInfo = document.getElementById("voltageInfo");
+    var currentInfo = document.getElementById("currentInfo");
+    var powerInfo = document.getElementById("powerInfo");
+
+    voltageButton.addEventListener("click", function() {
+        if (voltageButton.classList.contains("is-primary")){
+            voltageButton.classList.remove("is-primary");
+            voltageInfo.classList.add("is-invisible");
+        } else {
+            voltageButton.classList.add("is-primary");
+            voltageInfo.classList.remove("is-invisible");
+        }
+    });
+
+    currentButton.addEventListener("click", function() {
+        if (currentButton.classList.contains("is-primary")){
+            currentButton.classList.remove("is-primary");
+            currentInfo.classList.add("is-invisible");
+        } else {
+            currentButton.classList.add("is-primary");
+            currentInfo.classList.remove("is-invisible");
+        }
+    });
+
+    powerButton.addEventListener("click", function() {
+        if (powerButton.classList.contains("is-primary")){
+            powerButton.classList.remove("is-primary");
+            powerInfo.classList.add("is-invisible");
+        } else {
+            powerButton.classList.add("is-primary");
+            powerInfo.classList.remove("is-invisible");
+        }
+    });
+</script>
+{% endblock %}

@@ -62,7 +62,7 @@
                             </div>
                             <div class="tile is-horizontal">
                                 <div class="tile is-parent">
-                                    <button class="tile is-child notification" id="powerButton">
+                                    <button class="tile is-child is-focused notification" id="powerButton">
                                         <p class="title">Active Power</p>
                                     </button>
                                 </div>
@@ -101,7 +101,7 @@
                     </p>
                 </div>
                 <br/>
-                <a class="button has-text-centered {% if system_status %} is-danger {% else %} is-success {% endif %}" href="{% url 'api:toggle_system' %}">
+                <a class="button is-medium is-focused has-text-centered {% if system_status %} is-danger {% else %} is-success {% endif %}" href="{% url 'api:toggle_system' %}">
                     <span class="icon">
                         <i class="fas fa-power-off"></i>
                     </span>

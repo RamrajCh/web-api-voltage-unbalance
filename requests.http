@@ -1,0 +1,13 @@
+POST http://yubrajch.pythonanywhere.com/api/parameters/
+Content-Type: application/json
+
+{
+    "voltage_r": "1",
+    "voltage_y": "3",
+    "voltage_b": "5",
+    "current_r": "7",
+    "current_y": "9",
+    "current_b": "11"
+}
+
+###

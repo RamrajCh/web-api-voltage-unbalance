@@ -9,6 +9,7 @@
     <title>Home</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <style>
         body{
@@ -24,16 +25,8 @@
             <h1 class="title">
                 Parameters
             </h1>
-            <h2 class="subtitle">
-                {% block subtitle %} {% endblock %}
-            </h2>
-
-            <nav class="breadcrumb is-medium" aria-label="breadcrumbs">
-                <ul>
-                  <li class='{% if active == "home" %}is-active{% endif %}'><a href='{% url "api:home" %}'>Home</a></li>
-                </ul>
-            </nav>
-
+            {% block navbar %} {% endblock %}
+            
             <hr/>
             {% if messages %}
                 {% for message in messages %}

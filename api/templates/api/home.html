@@ -1,82 +1,124 @@
 {% extends "api/base.html" %}
 {% load static %}
 
-{% block subtitle %}
-    {{ parameter.created }}
-{% endblock %}
-
 {% block content %}
 
 <div class="tile is-ancestor">
-    <div class="tile is-parent is-3">
-        <button class="tile is-child notification" id="voltageButton">
-            <p class="title">RMS Voltage</p>
-        </button>
+    <div class="tile is-vertical">
+        <div class="tile">
+            <div class="tile is-parent">
+                <article class="tile is-child notification is-light is-info">
+                    <p class="title">
+                        Parameters
+                        <span class="tag is-info">{{ parameter.created }}</span>
+                    </p>
+                    <div class="tile is-ancestor">
+                        <div class="tile is-vertical">
+                            <div class="tile is-horizontal">
+                                <div class="tile is-parent">
+                                    <button class="tile is-child notification" id="voltageButton">
+                                        <p class="title">RMS Voltage</p>
+                                    </button>
+                                </div>
+                                <div class="tile is-parent is-3">
+                                  <article class="tile is-child notification is-invisible" id="voltageInfo">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                                V<sub>r</sub> = {{ parameter.voltage_r }}
+                                        </li>
+                                        <li class="list-group-item">
+                                                V<sub>y</sub> = {{ parameter.voltage_y }}
+                                        </li>
+                                        <li class="list-group-item">
+                                                V<sub>b</sub> = {{ parameter.voltage_b}}
+                                        </li>
+                                    </ul>
+                                  </article>
+                                </div>
+                            </div>
+                            <div class="tile is-horizontal">
+                                <div class="tile is-parent">
+                                  <button class="tile is-child notification" id="currentButton">
+                                    <p class="title">RMS Current</p>
+                                  </button>
+                                </div>
+                            
+                                <div class="tile is-parent is-3">
+                                    <article class="tile is-child notification is-invisible" id="currentInfo">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                I<sub>r</sub> = {{ parameter.current_r }}
+                                        </li>
+                                        <li class="list-group-item">
+                                            I<sub>y</sub> = {{ parameter.current_y }}
+                                        </li>
+                                        <li class="list-group-item">
+                                                I<sub>b</sub> = {{ parameter.current_b}}
+                                        </li>
+                                    </ul>
+                                  </article>
+                                </div>
+                                
+                            </div>
+                            <div class="tile is-horizontal">
+                                <div class="tile is-parent">
+                                    <button class="tile is-child notification" id="powerButton">
+                                        <p class="title">Active Power</p>
+                                    </button>
+                                </div>
+                                <div class="tile is-parent is-3">
+                                    <article class="tile is-child notification is-invisible" id="powerInfo">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                    P<sub>r</sub> = {{ parameter.power_r }}
+                                                </li>
+                                            <li class="list-group-item">
+                                                    P<sub>y</sub> = {{ parameter.power_y }}
+                                                </li>
+                                                <li class="list-group-item">
+                                                    P<sub>b</sub> = {{ parameter.power_b}}
+                                            </li>
+                                        </ul>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
     </div>
-    <div class="tile is-parent is-3">
-      <article class="tile is-child notification is-invisible" id="voltageInfo">
-        <ul class="list-group">
-            <li class="list-group-item">
-                    V<sub>r</sub> = {{ parameter.voltage_r }}
-            </li>
-            <li class="list-group-item">
-                    V<sub>y</sub> = {{ parameter.voltage_y }}
-            </li>
-            <li class="list-group-item">
-                    V<sub>b</sub> = {{ parameter.voltage_b}}
-            </li>
-        </ul>
-      </article>
+    <div class="tile is-vertical">
+        <div class="tile is-parent">
+            <article class="is-child notification is-light {% if system_status %} is-success {% else %} is-danger {% endif %}">
+                <div>
+                    <p class="title">System Status
+                    {% if system_status %}
+                        <span class="tag is-success">ON</span>
+                    {% else %}
+                        <span class="tag is-danger">OFF</span>
+                    {% endif %}
+                    </p>
+                </div>
+                <br/>
+                <a class="button has-text-centered {% if system_status %} is-danger {% else %} is-success {% endif %}" href="{% url 'api:toggle_system' %}">
+                    <span class="icon">
+                        <i class="fas fa-power-off"></i>
+                    </span>
+                    {% if system_status %}
+                        <span>Turn off</span>
+                    {% else %}
+                        <span>Turn on</span>
+                    {% endif %}
+                </a>
+            </article>
+        </div>
+        <div class="tile is-parent"></div>
     </div>
 </div>
 
-<div class="tile is-ancestor">
-    <div class="tile is-parent is-3">
-      <button class="tile is-child notification" id="currentButton">
-        <p class="title">RMS Current</p>
-      </button>
-    </div>
 
-    <div class="tile is-parent is-3">
-        <article class="tile is-child notification is-invisible" id="currentInfo">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    I<sub>r</sub> = {{ parameter.current_r }}
-            </li>
-            <li class="list-group-item">
-                I<sub>y</sub> = {{ parameter.current_y }}
-            </li>
-            <li class="list-group-item">
-                    I<sub>b</sub> = {{ parameter.current_b}}
-            </li>
-        </ul>
-      </article>
-    </div>
-    
-</div>
 
-<div class="tile is-ancestor">
-    <div class="tile is-parent is-3">
-        <button class="tile is-child notification" id="powerButton">
-            <p class="title">Active Power</p>
-        </button>
-    </div>
-    <div class="tile is-parent is-3">
-        <article class="tile is-child notification is-invisible" id="powerInfo">
-            <ul class="list-group">
-                <li class="list-group-item">
-                        P<sub>r</sub> = {{ parameter.power_r }}
-                    </li>
-                <li class="list-group-item">
-                        P<sub>y</sub> = {{ parameter.power_y }}
-                    </li>
-                    <li class="list-group-item">
-                        P<sub>b</sub> = {{ parameter.power_b}}
-                </li>
-            </ul>
-        </article>
-    </div>
-  </div>
 
 {% endblock %}
 

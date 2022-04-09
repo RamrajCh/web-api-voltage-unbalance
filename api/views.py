@@ -1,3 +1,4 @@
+from os import stat
 import pickle
 
 from django.contrib import messages
@@ -5,7 +6,7 @@ from django.shortcuts import redirect, render
 
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, GenericAPIView
 from django.views.generic import ListView
 from rest_framework.views import APIView
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
@@ -18,10 +19,26 @@ from api.models import Parameter
 with open("./system.pickle", "rb") as f:
     system = pickle.load(f)
 
-class ParameterListCreateView(ListCreateAPIView):
-    queryset = Parameter.objects.all()
-    serializer_class = ParameterSerializer
+class ParameterListCreateView(APIView):
 
+    def get(self, request, format=None):
+        parameters = Parameter.objects.all()
+        serializer = ParameterSerializer(parameters, many=True)
+        return Response(serializer.data, status=HTTP_200_OK)
+    
+    def post(self, request, format=None):
+        parameters = request.data.get('parameters')
+        parameters = parameters.split()
+        parameter = Parameter.objects.create(
+            voltage_r = parameters[0],
+            current_r = parameters[1],
+            voltage_y=parameters[2],
+            current_y=parameters[3],
+            voltage_b=parameters[4],
+            current_b=parameters[5]
+        )
+        serializer = ParameterSerializer(parameter)
+        return Response(serializer.data, status=HTTP_200_OK)
 
 class ParameterRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Parameter.objects.all()
@@ -48,7 +65,7 @@ def home(request):
     if request.method == "GET":
         parameter = Parameter.objects.all().first()
         system_status = system["system_on"]
-        return render(request, 'api/home.html', {'parameter': parameter, "active":"home", "system_status": system_status})
+        return render(request, 'api/home.html', {'parameter': parameter, "system_status": system_status})
 
 
 def toggle_system(request):
@@ -63,3 +80,9 @@ class GetSystemStatus(APIView):
     def get(self, request, format=None):
         global system
         return Response({"system_status": "on" if system["system_on"] else "off"}, status=HTTP_200_OK)
+
+
+def parameter_list(request):
+    if request.method == "GET":
+        parameters = Parameter.objects.all()[:100]
+        return render(request, 'api/list.html', {'parameters': parameters})

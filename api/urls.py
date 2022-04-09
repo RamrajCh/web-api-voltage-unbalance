@@ -6,6 +6,7 @@ app_name = 'api'
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('data-log/', views.parameter_list, name='parameter-list'),
     path('api/', views.APIRoot.as_view(), name='root'),
     path('api/parameters/', views.ParameterListCreateView.as_view(), name='parameter-list-create'),
     path('api/parameters/<int:pk>/', views.ParameterRetrieveUpdateDestroyView.as_view(), name='parameter-detail'),

@@ -1,6 +1,14 @@
 {% extends "api/base.html" %}
 {% load static %}
 
+{% block title %}
+    Home
+{% endblock %}
+
+{% block page_title %}
+    Home
+{% endblock %}
+
 {% block content %}
 
 <div class="tile is-ancestor">
@@ -89,7 +97,7 @@
         </div>
     </div>
     <div class="tile is-vertical">
-        <div class="tile is-parent">
+        <div class="tile is-parent is-7 is-vertical">
             <article class="is-child notification is-light {% if system_status %} is-success {% else %} is-danger {% endif %}">
                 <div>
                     <p class="title">System Status
@@ -113,13 +121,20 @@
                 </a>
             </article>
         </div>
-        <div class="tile is-parent"></div>
-    </div>
+
+        <div class="tile is-parent is-7 is-vertical">
+            <a href="{% url 'api:parameter-list' %}">
+                <article class="is-child notification is-light is-warning">
+                    <div>
+                        <p class="title">Data Log</p>
+                    </div>
+                    <br/>
+                    <p>Click to view data log.</p>
+                </article>
+            </a>
+        </div>
+    </div>  
 </div>
-
-
-
-
 {% endblock %}
 
 {% block extrascript %}

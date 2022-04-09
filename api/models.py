@@ -28,8 +28,11 @@ class Parameter(models.Model):
     def power_b(self):
         return float(self.voltage_b) * float(self.current_b)
 
-    #@property
-    # def error(self):
+    @property
+    def error(self):
+        max_v = max(float(self.voltage_r), float(self.voltage_y), float(self.voltage_b))
+        min_v = min(float(self.voltage_r), float(self.voltage_y), float(self.voltage_b))
+        return (max_v - min_v) > 10
 
 
     def __str__(self):

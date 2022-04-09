@@ -1,0 +1,79 @@
+{% extends "api/base.html" %}
+{% load static %}
+
+{% block extrastyle %}
+    .error-tr{
+        background-color:hsl(348, 100%, 61%);
+        color:#fff;
+    }
+{% endblock %}
+
+{% block title %}
+    Data Log
+{% endblock %}
+
+{% block page_title %}
+    Data Log
+{% endblock %}
+
+{% block content %}
+    <table class="table is-fullwidth">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Vr</th>
+                <th>Ir</th>
+                <th>Pr</th>
+                <th>Vy</th>
+                <th>Iy</th>
+                <th>Py</th>
+                <th>Vb</th>
+                <th>Ib</th>
+                <th>Pb</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for parameter in parameters %}
+                <tr class="{% if parameter.error %} error-tr {% endif %}">
+                    <td>
+                        {{ parameter.created | date:"D d M Y h:i:s:u A" }}
+                        {% if parameter.error %}
+                        <span class="tag is-danger is-light">ERROR</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ parameter.voltage_r }}
+                    </td>
+                    <td>
+                        {{ parameter.current_r }}
+                    </td>
+                    <td>
+                        {{ parameter.power_r }}
+                    </td>
+                    <td>
+                        {{ parameter.voltage_y }}
+                    </td>
+                    <td>
+                        {{ parameter.current_y }}
+                    </td>
+                    <td>
+                        {{ parameter.power_y }}
+                    </td>
+                    <td>
+                        {{ parameter.voltage_b }}
+                    </td>
+                    <td>
+                        {{ parameter.current_b }}
+                    </td>
+                    <td>
+                        {{ parameter.power_b }}
+                    </td>
+                </tr>
+            {%empty%}
+                <tr>
+                    Datalog is empty...
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -12,7 +12,7 @@
 {% block content %}
 
 <div class="tile is-ancestor">
-    <div class="tile is-vertical">
+    <div class="tile is-vertical is-8">
         <div class="tile">
             <div class="tile is-parent">
                 <article class="tile is-child notification is-light is-info">
@@ -28,7 +28,7 @@
                                         <p class="title">RMS Voltage</p>
                                     </button>
                                 </div>
-                                <div class="tile is-parent is-3">
+                                <div class="tile is-parent is-4">
                                   <article class="tile is-child notification is-invisible" id="voltageInfo">
                                     <ul class="list-group">
                                         <li class="list-group-item">
@@ -51,7 +51,7 @@
                                   </button>
                                 </div>
                             
-                                <div class="tile is-parent is-3">
+                                <div class="tile is-parent is-4">
                                     <article class="tile is-child notification is-invisible" id="currentInfo">
                                         <ul class="list-group">
                                             <li class="list-group-item">
@@ -74,7 +74,7 @@
                                         <p class="title">Active Power</p>
                                     </button>
                                 </div>
-                                <div class="tile is-parent is-3">
+                                <div class="tile is-parent is-4">
                                     <article class="tile is-child notification is-invisible" id="powerInfo">
                                         <ul class="list-group">
                                             <li class="list-group-item">
@@ -97,7 +97,7 @@
         </div>
     </div>
     <div class="tile is-vertical">
-        <div class="tile is-parent is-7 is-vertical">
+        <div class="tile is-parent is-10 is-vertical">
             <article class="is-child notification is-light {% if system_status %} is-success {% else %} is-danger {% endif %}">
                 <div>
                     <p class="title">System Status
@@ -122,7 +122,7 @@
             </article>
         </div>
 
-        <div class="tile is-parent is-7 is-vertical">
+        <div class="tile is-parent is-10 is-vertical">
             <a href="{% url 'api:parameter-list' %}">
                 <article class="is-child notification is-light is-warning">
                     <div>

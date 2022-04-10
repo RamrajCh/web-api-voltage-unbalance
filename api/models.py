@@ -18,21 +18,21 @@ class Parameter(models.Model):
 
     @property
     def power_y(self):
-        return float(self.voltage_y) * float(self.current_y)
+        return round(float(self.voltage_y) * float(self.current_y), 4)
     
     @property
     def power_r(self):
-        return float(self.voltage_r) * float(self.current_r)
+        return round(float(self.voltage_r) * float(self.current_r), 4)
     
     @property
     def power_b(self):
-        return float(self.voltage_b) * float(self.current_b)
+        return round(float(self.voltage_b) * float(self.current_b), 4)
 
     @property
     def error(self):
         max_v = max(float(self.voltage_r), float(self.voltage_y), float(self.voltage_b))
         min_v = min(float(self.voltage_r), float(self.voltage_y), float(self.voltage_b))
-        return (max_v - min_v) > 10
+        return (max_v - min_v) > 15
 
 
     def __str__(self):

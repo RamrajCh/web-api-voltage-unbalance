@@ -30,12 +30,12 @@ class ParameterListCreateView(APIView):
         parameters = request.data.get('parameters')
         parameters = parameters.split()
         parameter = Parameter.objects.create(
-            voltage_r = parameters[0],
-            current_r = parameters[1],
-            voltage_y=parameters[2],
-            current_y=parameters[3],
-            voltage_b=parameters[4],
-            current_b=parameters[5]
+            voltage_r = str(round(float(parameters[0]), 4)),
+            current_r = str(round(float(parameters[1]), 4)),
+            voltage_y = str(round(float(parameters[2]), 4)),
+            current_y = str(round(float(parameters[3]), 4)),
+            voltage_b = str(round(float(parameters[4]), 4)),
+            current_b = str(round(float(parameters[5]), 4))
         )
         serializer = ParameterSerializer(parameter)
         return Response(serializer.data, status=HTTP_200_OK)
